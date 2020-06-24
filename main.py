@@ -47,6 +47,10 @@ class Game:
         # Отрисовка кадра
         self.draw()
 
+    def scores(self):
+        """Считаю игровые очки"""
+        pass
+
     def main_loop(self):
         while True:
             # Задержка
