@@ -1,9 +1,8 @@
 import os
-import numpy as np
 
 class Config:
     FPS = 60
-
+    TITLE = 'Spaceship game'
     WIDTH = 1200
     HEIGHT = 800
 

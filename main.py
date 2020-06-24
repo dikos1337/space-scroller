@@ -9,7 +9,7 @@ from sprites import SpriteBackGround
 def main():
     pygame.init()
     main_window = pygame.display.set_mode((Config.WIDTH, Config.HEIGHT),pygame.RESIZABLE)
-    pygame.display.set_caption('Dodger game')
+    pygame.display.set_caption(Config.TITLE)
     clock = pygame.time.Clock()
 
     background = SpriteBackGround()
