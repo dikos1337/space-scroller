@@ -1,7 +1,8 @@
 import os
 
+
 class Config:
-    FPS = 60
+    FPS = 30
     TITLE = 'Spaceship game'
     WIDTH = 1200
     HEIGHT = 800

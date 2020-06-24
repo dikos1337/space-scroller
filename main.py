@@ -9,13 +9,13 @@ class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(Config.TITLE)
+
         self.main_window = pygame.display.set_mode((Config.WIDTH, Config.HEIGHT))
-
         self.clock = pygame.time.Clock()
-
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
-        self.meteors = [Meteorite() for _ in range(Config.total_meteorites)]
+        self.meteorites = [Meteorite() for _ in range(Config.total_meteorites)]
+
         self.main_loop()  # Запускаю main loop
 
     def ckeck_events(self):
@@ -35,9 +35,9 @@ class Game:
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
         # Отрисовываю метеориты
-        for meteor in self.meteors:
-            self.main_window.blit(meteor.image, meteor.rect)
-            meteor.fall()
+        for meteorite in self.meteorites:
+            self.main_window.blit(meteorite.image, meteorite.rect)
+            meteorite.fall()
 
     def tick(self):
         """То что происходит каждый кадр"""
