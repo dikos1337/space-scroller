@@ -5,37 +5,62 @@ from config import Config
 from sprites import SpriteBackGround
 
 
-def main():
-    pygame.init()
-    main_window = pygame.display.set_mode((Config.WIDTH, Config.HEIGHT), pygame.RESIZABLE)
-    pygame.display.set_caption(Config.TITLE)
-    clock = pygame.time.Clock()
+class Game:
+    def __init__(self):
+        pygame.init()
+        pygame.display.set_caption(Config.TITLE)
+        self.main_window = pygame.display.set_mode((Config.WIDTH, Config.HEIGHT))
 
-    background = SpriteBackGround()
-    player = PlayerSpaceship()
-    meteors = [Meteorite() for _ in range(Config.total_meteorites)]
-    while True:
-        # задержка
-        clock.tick(Config.FPS)
+        self.clock = pygame.time.Clock()
 
-        # цикл обработки событий
-        for i in pygame.event.get():
-            if i.type == pygame.QUIT:
+        self.background = SpriteBackGround()
+        self.player = PlayerSpaceship()
+        self.meteors = [Meteorite() for _ in range(Config.total_meteorites)]
+        self.main_loop()  # Запускаю main loop
+
+    def ckeck_events(self):
+        """Обработка игровых событий"""
+
+        self.player.move()  # Проверяю движения игрока
+
+        # Проверяю выход из игры
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 exit()
 
-        # --------
-        # изменение объектов и многое др.
-        # --------
+    def draw(self):
+        """То, что отрисовывается каждый кадр"""
 
-        main_window.blit(background.image, background.rect)  # fill background
-        main_window.blit(player.image, player.rect)
-        player.move()
-        for meteor in meteors:
-            main_window.blit(meteor.image, meteor.rect)
+        self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
+        self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
+
+        # Отрисовываю метеориты
+        for meteor in self.meteors:
+            self.main_window.blit(meteor.image, meteor.rect)
             meteor.fall()
-        # обновление экрана
-        pygame.display.update()
+
+    def tick(self):
+        """То что происходит каждый кадр"""
+        # Обработка событий
+        self.ckeck_events()
+
+        # Отрисовка кадра
+        self.draw()
+
+    def main_loop(self):
+        while True:
+            # Задержка
+            self.clock.tick(Config.FPS)
+
+            # Цикл обработки событий
+            self.ckeck_events()
+
+            # Изменение объектов и многое др.
+            self.tick()
+
+            # Обновление экрана
+            pygame.display.update()
 
 
 if __name__ == '__main__':
-    main()
+    Game()
