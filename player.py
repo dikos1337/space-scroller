@@ -3,7 +3,7 @@ from sprites import SpritePlayerSpaceship
 
 
 class PlayerSpaceship(SpritePlayerSpaceship):
-    movespeed = 10 # px per frame
+    movespeed = 10  # px per frame
 
     def move(self):
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
