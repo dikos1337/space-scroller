@@ -19,8 +19,10 @@ class SpriteMeteorite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         all_sprites = [file_name for file_name in os.listdir(Config.img_folder) if 'meteorite' in file_name]
         random_sprite = random.choice(all_sprites)
+        random_size = random.choice([size for size in range(50,101,10)])
+
         image = pygame.image.load(os.path.join(Config.img_folder, random_sprite))
-        image = pygame.transform.scale(image, (100, 100))
+        image = pygame.transform.scale(image, (random_size, random_size))
         self.image = image.convert_alpha()
         self.rect = self.image.get_rect(center=(random.randint(0, Config.WIDTH), random.randint(-1000, 0)))
 
