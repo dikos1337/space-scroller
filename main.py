@@ -1,9 +1,11 @@
-import pygame
 import random
+
+import pygame
+
+from sprites import SpriteBackGround
 from player import PlayerSpaceship
 from meteorite import Meteorite
 from config import Config
-from sprites import SpriteBackGround
 
 
 class Game:

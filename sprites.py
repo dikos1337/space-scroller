@@ -1,7 +1,9 @@
-import pygame
-from config import Config
 import random
 import os
+
+import pygame
+
+from config import Config
 
 
 class SpritePlayerSpaceship(pygame.sprite.Sprite):
