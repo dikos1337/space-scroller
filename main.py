@@ -1,4 +1,5 @@
 import pygame
+import random
 from player import PlayerSpaceship
 from meteorite import Meteorite
 from config import Config
@@ -14,7 +15,12 @@ class Game:
         self.clock = pygame.time.Clock()
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
+
+        # Спавню и конфигурирую метеориты
         self.meteorites = [Meteorite() for _ in range(Config.total_meteorites)]
+        for meteorite in self.meteorites:
+            meteorite.speed = random.choice(range(1, 6))
+            meteorite.spread = random.choice(range(-5, 6))
 
         self.main_loop()  # Запускаю main loop
 
@@ -32,12 +38,13 @@ class Game:
         """То, что отрисовывается каждый кадр"""
 
         self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
-        self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
         # Отрисовываю метеориты
         for meteorite in self.meteorites:
             self.main_window.blit(meteorite.image, meteorite.rect)
             meteorite.fall()
+
+        self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
     def tick(self):
         """То что происходит каждый кадр"""

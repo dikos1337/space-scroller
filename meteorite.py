@@ -4,15 +4,12 @@ from config import Config
 
 
 class Meteorite(SpriteMeteorite):
-    speed = random.choice([1, 5, 10, 15, 20])
-    radius = 80
-    spread = 5
+    radius = 80  # FIX IT: Надо или удалить или брать из конфига
 
     def fall(self):
         """Логика падения метеорита"""
         self.rect.y += self.speed
-        self.rect.x += random.randint(-self.spread, self.spread)
-        self.speed = random.choice([1, 5, 10])
+        self.rect.x += self.spread
 
         # Обработка случаев если метеорит улетел за пределы окна
         if self.rect.y > Config.HEIGHT:
