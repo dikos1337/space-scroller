@@ -36,7 +36,7 @@ class Game:
             self.player.health -= 1
         print(self.player.health, collide)
 
-    def check_health_point(self):
+    def check_health_points(self):
         if self.player.health <= 0:
             print('Корабль разрушен')
             pygame.quit()
@@ -47,7 +47,7 @@ class Game:
 
         self.player.move()  # Проверяю движения игрока
         self.check_collisions()  # Проверяю столкновения метеоритов с кораблем
-        self.check_health_point()  # Проверяю здоровье корабля
+        self.check_health_points()  # Проверяю здоровье корабля
 
         # Проверяю выход из игры
         for event in pygame.event.get():
