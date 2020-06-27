@@ -7,6 +7,7 @@ from config import Config
 from interface import Interface
 from sounds import Sounds
 
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -39,7 +40,7 @@ class Game:
             Sounds.hurt_sound.play()
 
         # Проверяю лазеры и метеориты
-        laser_hits = pygame.sprite.groupcollide(self.meteorites, self.lasers, True, True)
+        laser_hits = pygame.sprite.groupcollide(self.meteorites, self.lasers, True, True, pygame.sprite.collide_circle)
         # Если лазер попадает в метеорит, то начисляю очки
         for hit in laser_hits:
             self.score += 50 - hit.radius  # Тут радиус метеорита, у лазера нет свойтва радиус.
@@ -116,7 +117,7 @@ class Game:
         self.draw()
 
     def main_loop(self):
-        Sounds.background_sound.play()
+        Sounds.background_sound.play(loops=-1)
         while True:
             # Задержка
             self.clock.tick(Config.FPS)
