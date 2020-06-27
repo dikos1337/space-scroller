@@ -5,7 +5,10 @@ from config import Config
 
 
 class Meteorite(SpriteMeteorite):
-    radius = 80  # FIXME: Надо или удалить или брать из конфига
+    # def __init__(self):
+    #     self.radius = 80  # FIXME: Надо или удалить или брать из конфига
+    #     self.speed = random.choice(range(1, 3))
+    #     self.spread = random.choice(range(-3, 4))
 
     def update(self):
         """Логика падения метеорита"""

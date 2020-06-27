@@ -9,10 +9,6 @@ from config import Config
 from interface import Interface
 
 
-# SPACESHIP_ATTACK = pygame.USEREVENT + 1
-#
-# pygame.time.set_timer(SPACESHIP_ATTACK, 100)
-
 class Game:
     def __init__(self):
         pygame.init()
@@ -29,13 +25,14 @@ class Game:
         for _ in range(Config.total_meteorites):
             self.meteorites.add(Meteorite())
 
-        for meteorite in self.meteorites:
-            meteorite.speed = random.choice(range(1, 3))
-            meteorite.spread = random.choice(range(-3, 4))
+        # for meteorite in self.meteorites:
+        #     meteorite.speed = random.choice(range(1, 3))
+        #     meteorite.spread = random.choice(range(-3, 4))
 
         self.main_loop()  # Запускаю main loop
 
     def check_meteorites(self):
+        print(len(self.meteorites))
         if len(self.meteorites) < Config.total_meteorites:
             self.meteorites.add(Meteorite())
             # meteorites[-1].speed = random.choice(range(1, 3))
@@ -80,7 +77,7 @@ class Game:
             self.event_attack(event)
 
         self.player.move()  # Проверяю движения игрока
-        # self.check_meteorites()  # Проверяю кол-во метеоритов
+        self.check_meteorites()  # Проверяю кол-во метеоритов
         self.check_collisions()  # Проверяю столкновения метеоритов с кораблем
         self.check_health_points()  # Проверяю здоровье корабля
 
