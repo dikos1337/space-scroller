@@ -5,7 +5,7 @@ from config import Config
 
 
 class Meteorite(SpriteMeteorite):
-    radius = 80  # FIX IT: Надо или удалить или брать из конфига
+    radius = 80  # FIXME: Надо или удалить или брать из конфига
 
     def fall(self):
         """Логика падения метеорита"""

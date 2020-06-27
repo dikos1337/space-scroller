@@ -19,21 +19,40 @@ class Game:
         self.player = PlayerSpaceship()
 
         # Спавню и конфигурирую метеориты
-        self.meteorites = [Meteorite() for _ in range(Config.total_meteorites)]
+        self.meteorites = pygame.sprite.Group()
+        for _ in range(Config.total_meteorites):
+            self.meteorites.add(Meteorite())
         for meteorite in self.meteorites:
             meteorite.speed = random.choice(range(1, 6))
             meteorite.spread = random.choice(range(-5, 6))
 
         self.main_loop()  # Запускаю main loop
 
+    def check_collisions(self):
+        """Обработка столкновений корабля с метеоритами"""
+        # TODO добавить еще обработку выстрелов с метеоритами
+        collide = pygame.sprite.spritecollide(self.player, self.meteorites, True)
+        if collide:
+            self.player.health -= 1
+        print(self.player.health, collide)
+
+    def check_health_point(self):
+        if self.player.health <= 0:
+            print('Корабль разрушен')
+            pygame.quit()
+            exit()
+
     def ckeck_events(self):
         """Обработка игровых событий"""
 
         self.player.move()  # Проверяю движения игрока
+        self.check_collisions()  # Проверяю столкновения метеоритов с кораблем
+        self.check_health_point()  # Проверяю здоровье корабля
 
         # Проверяю выход из игры
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.quit()
                 exit()
 
     def draw(self):

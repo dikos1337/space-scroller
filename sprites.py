@@ -7,6 +7,8 @@ from config import Config
 
 
 class SpritePlayerSpaceship(pygame.sprite.Sprite):
+    """Спрайт корабля игрока"""
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         player_img = pygame.image.load(os.path.join(Config.img_folder, 'spaceship.png'))
@@ -17,6 +19,8 @@ class SpritePlayerSpaceship(pygame.sprite.Sprite):
 
 
 class SpriteMeteorite(pygame.sprite.Sprite):
+    """Спрайты метеоритов"""
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         all_sprites = [file_name for file_name in os.listdir(Config.img_folder) if 'meteorite' in file_name]
@@ -30,6 +34,8 @@ class SpriteMeteorite(pygame.sprite.Sprite):
 
 
 class SpriteBackGround(pygame.sprite.Sprite):
+    """background sprite"""
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         player_img = pygame.image.load(os.path.join(Config.img_folder, 'background.jpg'))
