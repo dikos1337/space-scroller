@@ -22,6 +22,7 @@ class Game:
         self.meteorites = pygame.sprite.Group()
         for _ in range(Config.total_meteorites):
             self.meteorites.add(Meteorite())
+
         for meteorite in self.meteorites:
             meteorite.speed = random.choice(range(1, 6))
             meteorite.spread = random.choice(range(-5, 6))
