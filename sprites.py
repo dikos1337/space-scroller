@@ -31,9 +31,9 @@ class SpriteMeteorite(pygame.sprite.Sprite):
         self.image = image.convert_alpha()
         self.rect = self.image.get_rect(center=(random.randint(0, Config.WIDTH), random.randint(-Config.HEIGHT, 0)))
 
-        # FIXME: Положил это сбда из meteorite.py потому что там если вызвать __init__(self) то всё перезапишется :(
+        # FIXME: Положил это сюда из meteorite.py потому что там если вызвать __init__(self) то всё перезапишется :(
         self.radius = 80  # FIXME: Надо или удалить или брать из конфига
-        self.speed = random.choice(range(1, 3))
+        self.speed = random.choice(range(1, 6))
         self.spread = random.choice(range(-3, 4))
 
 

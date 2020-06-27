@@ -32,11 +32,8 @@ class Game:
         self.main_loop()  # Запускаю main loop
 
     def check_meteorites(self):
-        print(len(self.meteorites))
         if len(self.meteorites) < Config.total_meteorites:
             self.meteorites.add(Meteorite())
-            # meteorites[-1].speed = random.choice(range(1, 3))
-            # self.meteorites[-1].spread = random.choice(range(-3, 4))
 
     def check_collisions(self):
         """Обработка столкновений корабля с метеоритами"""
@@ -44,7 +41,6 @@ class Game:
         collide = pygame.sprite.spritecollide(self.player, self.meteorites, True)
         if collide:
             self.player.health -= 1
-        print(self.player.health, collide)
 
         # Проверяю лазеры и метеориты
         pygame.sprite.groupcollide(self.lasers, self.meteorites, True, True)
