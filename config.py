@@ -14,4 +14,4 @@ class Config:
     total_meteorites = 25  # Количество метеоритов на уровне
 
     game_folder = os.path.dirname(__file__)
-    img_folder = os.path.join(game_folder, 'sprites')
+    img_folder = os.path.join(game_folder, 'src', 'sprites')

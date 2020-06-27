@@ -22,6 +22,8 @@ class Interface:
         pass
 
     def health_points(self,surface,start_x,player_hp):
+        """Отображения здоровье игрока"""
+        # FIXME: Сделать так чтоб функция возвращала готовое полотно а не принемала основное(и на нем рисовала)
         healthpoints = pygame.sprite.Group()
         for x in range(start_x,
                        start_x + Config.SpriteHealthPoints_size[0] * player_hp,
@@ -54,9 +56,7 @@ class Interface:
 #             running = False
 #
 #     # Обновление
-#
-#
-#
+
 #     # Рендеринг
 #     screen.fill(BLACK)
 #     for hp in healthpoints:
