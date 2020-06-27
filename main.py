@@ -9,6 +9,10 @@ from config import Config
 from interface import Interface
 
 
+# SPACESHIP_ATTACK = pygame.USEREVENT + 1
+#
+# pygame.time.set_timer(SPACESHIP_ATTACK, 100)
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -31,13 +35,22 @@ class Game:
 
         self.main_loop()  # Запускаю main loop
 
+    def check_meteorites(self):
+        if len(self.meteorites) < Config.total_meteorites:
+            self.meteorites.add(Meteorite())
+            # self.meteorites[-1].speed = random.choice(range(1, 3))
+            # self.meteorites[-1].spread = random.choice(range(-3, 4))
+
     def check_collisions(self):
         """Обработка столкновений корабля с метеоритами"""
-        # TODO добавить еще обработку выстрелов с метеоритами
+        # Проверяю корабль и метеориты
         collide = pygame.sprite.spritecollide(self.player, self.meteorites, True)
         if collide:
             self.player.health -= 1
         print(self.player.health, collide)
+
+        # Проверяю лазеры и метеориты
+        pygame.sprite.groupcollide(self.lasers, self.meteorites, True, True)
 
     def check_health_points(self):
         """Проверка запаса здоровья корабля"""
@@ -46,28 +59,36 @@ class Game:
             pygame.quit()
             exit()
 
-    def check_attack(self):
+    def event_attack(self, event):
         """Проверка атаки"""
-        if pygame.key.get_pressed()[pygame.K_SPACE]:
-            self.lasers.add(self.player.shoot())
+        if event.type == self.player.SPACESHIP_ATTACK:
+            if pygame.key.get_pressed()[pygame.K_SPACE]:
+                self.lasers.add(self.player.shoot())
+
+    def event_quit(self, event):
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
 
     def ckeck_events(self):
         """Обработка игровых событий"""
-        # Проверяю выход из игры
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
+            # Проверяю выход из игры
+            self.event_quit(event)
+
+            # Проверяю и ограничиваю скорость атаки
+            self.event_attack(event)
 
         self.player.move()  # Проверяю движения игрока
+        # self.check_meteorites()  # Проверяю кол-во метеоритов
         self.check_collisions()  # Проверяю столкновения метеоритов с кораблем
         self.check_health_points()  # Проверяю здоровье корабля
-        self.check_attack()  # Проверяю атаку
 
     def draw(self):
         """То, что отрисовывается каждый кадр"""
         self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
 
+        # FIXME: тут можно обновлять группы спрайтов а не каждый спрайт
         # Отрисовываю метеориты
         for meteorite in self.meteorites:
             self.main_window.blit(meteorite.image, meteorite.rect)
