@@ -38,7 +38,7 @@ class SpriteBackGround(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         player_img = pygame.image.load(os.path.join(Config.img_folder, 'background.jpg'))
         player_img = pygame.transform.scale(player_img, (Config.WIDTH, Config.HEIGHT))
-        self.image = player_img.convert_alpha()
+        self.image = player_img.convert()
         self.rect = self.image.get_rect()
 
 
