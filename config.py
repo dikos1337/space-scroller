@@ -15,3 +15,4 @@ class Config:
 
     game_folder = os.path.dirname(__file__)
     img_folder = os.path.join(game_folder, 'src', 'sprites')
+    snd_folder = os.path.join(game_folder, 'src', 'sounds')

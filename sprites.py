@@ -49,7 +49,7 @@ class SpriteLaser(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         laser_img = pygame.image.load(os.path.join(Config.img_folder, 'laser.png'))
-        laser_img = pygame.transform.scale(laser_img, (20, 30))
+        laser_img = pygame.transform.scale(laser_img, (20, 50))
         self.image = laser_img.convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.bottom = y

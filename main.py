@@ -5,7 +5,7 @@ from player import PlayerSpaceship
 from meteorite import Meteorite
 from config import Config
 from interface import Interface
-
+from sounds import Sounds
 
 class Game:
     def __init__(self):
@@ -19,7 +19,7 @@ class Game:
         self.lasers = pygame.sprite.Group()
         self.score = 0
 
-        # Спавню и конфигурирую метеориты
+        # Создаю метеориты
         self.meteorites = pygame.sprite.Group()
         for _ in range(Config.total_meteorites):
             self.meteorites.add(Meteorite())
@@ -36,19 +36,20 @@ class Game:
         collide = pygame.sprite.spritecollide(self.player, self.meteorites, True, pygame.sprite.collide_circle)
         if collide:
             self.player.health -= 1
+            Sounds.hurt_sound.play()
 
         # Проверяю лазеры и метеориты
         laser_hits = pygame.sprite.groupcollide(self.meteorites, self.lasers, True, True)
-
         # Если лазер попадает в метеорит, то начисляю очки
         for hit in laser_hits:
             self.score += 50 - hit.radius  # Тут радиус метеорита, у лазера нет свойтва радиус.
+            Sounds.explosion_sound.play()
 
     def check_health_points(self):
         """Проверка запаса здоровья корабля"""
         if self.player.health <= 0:
             print('Корабль разрушен')
-            print('Набранные очки:',self.score)
+            print('Набранные очки:', self.score)
             pygame.quit()
             exit()
 
@@ -57,6 +58,7 @@ class Game:
         if event.type == self.player.SPACESHIP_ATTACK:
             if pygame.key.get_pressed()[pygame.K_SPACE]:
                 self.lasers.add(self.player.shoot())
+                Sounds.shoot_sound.play()
 
     def event_quit(self, event):
         if event.type == pygame.QUIT:
@@ -113,11 +115,8 @@ class Game:
         # Отрисовка кадра
         self.draw()
 
-    # def scores(self):
-    #     """Считаю игровые очки"""
-    #     pass
-
     def main_loop(self):
+        Sounds.background_sound.play()
         while True:
             # Задержка
             self.clock.tick(Config.FPS)
