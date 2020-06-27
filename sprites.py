@@ -45,11 +45,14 @@ class SpriteBackGround(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(Config.WIDTH / 2, Config.HEIGHT / 2))
 
 
-class Bullet(pygame.sprite.Sprite):
+class SpriteLaser(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((10, 20))
-        self.image.fill((255, 255, 0))
+        # self.image = pygame.Surface((10, 20))
+        # self.image.fill((255, 255, 0))
+        laser_img = pygame.image.load(os.path.join(Config.img_folder, 'laser.png'))
+        laser_img = pygame.transform.scale(laser_img, (20, 30))
+        self.image = laser_img.convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.bottom = y
         self.rect.centerx = x

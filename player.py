@@ -1,6 +1,7 @@
 import pygame
 
-from sprites import SpritePlayerSpaceship, Bullet
+from sprites import SpritePlayerSpaceship, SpriteLaser
+
 
 class PlayerSpaceship(SpritePlayerSpaceship):
     movespeed = 5  # pixels per frame
@@ -19,5 +20,5 @@ class PlayerSpaceship(SpritePlayerSpaceship):
 
     def shoot(self):
         """Функционал стрельбы из корабля"""
-        bullet = Bullet(self.rect.centerx, self.rect.top)
-        return bullet
+        laser = SpriteLaser(self.rect.centerx, self.rect.top)
+        return laser
