@@ -8,7 +8,6 @@ from config import Config
 
 class SpritePlayerSpaceship(pygame.sprite.Sprite):
     """Спрайт корабля игрока"""
-
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         player_img = pygame.image.load(os.path.join(Config.img_folder, 'spaceship.png'))
@@ -20,7 +19,6 @@ class SpritePlayerSpaceship(pygame.sprite.Sprite):
 
 class SpriteMeteorite(pygame.sprite.Sprite):
     """Спрайты метеоритов"""
-
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         all_sprites = [file_name for file_name in os.listdir(Config.img_folder) if 'meteorite' in file_name]
@@ -31,25 +29,23 @@ class SpriteMeteorite(pygame.sprite.Sprite):
         image = pygame.transform.scale(image, (random_size, random_size))  # Задаю случайный размер
         image = pygame.transform.rotate(image, random.randint(0, 360))  # Задаю случайный поворот
         self.image = image.convert_alpha()
-        self.rect = self.image.get_rect(center=(random.randint(0, Config.WIDTH), random.randint(-1000, 0)))
+        self.rect = self.image.get_rect(center=(random.randint(0, Config.WIDTH), random.randint(-Config.HEIGHT, 0)))
 
 
 class SpriteBackGround(pygame.sprite.Sprite):
     """background sprite"""
-
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         player_img = pygame.image.load(os.path.join(Config.img_folder, 'background.jpg'))
         player_img = pygame.transform.scale(player_img, (Config.WIDTH, Config.HEIGHT))
         self.image = player_img.convert_alpha()
-        self.rect = self.image.get_rect(center=(Config.WIDTH / 2, Config.HEIGHT / 2))
+        self.rect = self.image.get_rect()
 
 
 class SpriteLaser(pygame.sprite.Sprite):
+    """Спрайт лазера для атаки корабля"""
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        # self.image = pygame.Surface((10, 20))
-        # self.image.fill((255, 255, 0))
         laser_img = pygame.image.load(os.path.join(Config.img_folder, 'laser.png'))
         laser_img = pygame.transform.scale(laser_img, (20, 30))
         self.image = laser_img.convert_alpha()
@@ -63,3 +59,15 @@ class SpriteLaser(pygame.sprite.Sprite):
         # убить, если он заходит за верхнюю часть экрана
         if self.rect.bottom < 0:
             self.kill()
+
+
+class SpriteHealthPoints(pygame.sprite.Sprite):
+    """Спрайт для очков здоровья"""
+    def __init__(self, x):
+        pygame.sprite.Sprite.__init__(self)
+        player_img = pygame.image.load(os.path.join(Config.img_folder, 'hp.png'))
+        player_img = pygame.transform.scale(player_img, (Config.SpriteHealthPoints_size[0],
+                                                         Config.SpriteHealthPoints_size[1]))
+        self.image = player_img.convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.centerx = x

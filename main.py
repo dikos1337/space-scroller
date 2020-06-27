@@ -6,6 +6,7 @@ from sprites import SpriteBackGround
 from player import PlayerSpaceship
 from meteorite import Meteorite
 from config import Config
+from interface import Interface
 
 
 class Game:
@@ -78,6 +79,12 @@ class Game:
 
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
+        # Вывожу на экран очки здоровья
+        Interface.health_points(self,
+                                surface=self.main_window,
+                                start_x=int(Config.SpriteHealthPoints_size[0] / 2),
+                                player_hp=self.player.health)
+
     def tick(self):
         """То что происходит каждый кадр"""
         # Обработка событий
@@ -100,7 +107,6 @@ class Game:
 
             # Изменение объектов и многое др.
             self.tick()
-
             # Обновление экрана
             pygame.display.update()
 

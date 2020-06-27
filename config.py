@@ -9,6 +9,7 @@ class Config:
 
     SpritePlayerSpaceship_init_x = WIDTH / 2
     SpritePlayerSpaceship_init_y = HEIGHT / 1.2
+    SpriteHealthPoints_size = (30, 25)  # x,y ; pixels
 
     total_meteorites = 25  # Количество метеоритов на уровне
 
