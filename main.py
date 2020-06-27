@@ -38,7 +38,7 @@ class Game:
     def check_meteorites(self):
         if len(self.meteorites) < Config.total_meteorites:
             self.meteorites.add(Meteorite())
-            # self.meteorites[-1].speed = random.choice(range(1, 3))
+            # meteorites[-1].speed = random.choice(range(1, 3))
             # self.meteorites[-1].spread = random.choice(range(-3, 4))
 
     def check_collisions(self):
@@ -88,15 +88,13 @@ class Game:
         """То, что отрисовывается каждый кадр"""
         self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
 
-        # FIXME: тут можно обновлять группы спрайтов а не каждый спрайт
         # Отрисовываю метеориты
-        for meteorite in self.meteorites:
-            self.main_window.blit(meteorite.image, meteorite.rect)
-            meteorite.fall()
+        self.meteorites.update()
+        self.meteorites.draw(self.main_window)
 
-        for laser in self.lasers:
-            self.main_window.blit(laser.image, laser.rect)
-            laser.update()
+        # Отрисовываю лазеры
+        self.lasers.update()
+        self.lasers.draw(self.main_window)
 
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
