@@ -17,6 +17,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
+        self.bullets = pygame.sprite.Group()
 
         # Спавню и конфигурирую метеориты
         self.meteorites = pygame.sprite.Group()
@@ -38,33 +39,42 @@ class Game:
         print(self.player.health, collide)
 
     def check_health_points(self):
+        """Проверка запаса здоровья корабля"""
         if self.player.health <= 0:
             print('Корабль разрушен')
             pygame.quit()
             exit()
 
+    def check_attack(self):
+        """Проверка атаки"""
+        if pygame.key.get_pressed()[pygame.K_SPACE]:
+            self.bullets.add(self.player.shoot())
+
     def ckeck_events(self):
         """Обработка игровых событий"""
-
-        self.player.move()  # Проверяю движения игрока
-        self.check_collisions()  # Проверяю столкновения метеоритов с кораблем
-        self.check_health_points()  # Проверяю здоровье корабля
-
         # Проверяю выход из игры
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
+        self.player.move()  # Проверяю движения игрока
+        self.check_collisions()  # Проверяю столкновения метеоритов с кораблем
+        self.check_health_points()  # Проверяю здоровье корабля
+        self.check_attack()
+
     def draw(self):
         """То, что отрисовывается каждый кадр"""
-
         self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
 
         # Отрисовываю метеориты
         for meteorite in self.meteorites:
             self.main_window.blit(meteorite.image, meteorite.rect)
             meteorite.fall()
+
+        for bullet in self.bullets:
+            self.main_window.blit(bullet.image, bullet.rect)
+            bullet.update()
 
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
