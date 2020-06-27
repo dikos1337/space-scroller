@@ -17,6 +17,7 @@ class Game:
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
         self.lasers = pygame.sprite.Group()
+        self.score = 0
 
         # Спавню и конфигурирую метеориты
         self.meteorites = pygame.sprite.Group()
@@ -37,12 +38,17 @@ class Game:
             self.player.health -= 1
 
         # Проверяю лазеры и метеориты
-        pygame.sprite.groupcollide(self.lasers, self.meteorites, True, True)
+        laser_hits = pygame.sprite.groupcollide(self.meteorites, self.lasers, True, True)
+
+        # Если лазер попадает в метеорит, то начисляю очки
+        for hit in laser_hits:
+            self.score += 50 - hit.radius  # Тут радиус метеорита, у лазера нет свойтва радиус.
 
     def check_health_points(self):
         """Проверка запаса здоровья корабля"""
         if self.player.health <= 0:
             print('Корабль разрушен')
+            print('Набранные очки:',self.score)
             pygame.quit()
             exit()
 
@@ -91,6 +97,14 @@ class Game:
                                 start_x=int(Config.SpriteHealthPoints_size[0] / 2),
                                 player_hp=self.player.health)
 
+        # Вывожу счёт
+        Interface.scores(self,
+                         surface=self.main_window,
+                         text='Scores: ' + str(self.score),
+                         size=25,
+                         x=0,
+                         y=Config.SpriteHealthPoints_size[1] + 15)
+
     def tick(self):
         """То что происходит каждый кадр"""
         # Обработка событий
@@ -99,9 +113,9 @@ class Game:
         # Отрисовка кадра
         self.draw()
 
-    def scores(self):
-        """Считаю игровые очки"""
-        pass
+    # def scores(self):
+    #     """Считаю игровые очки"""
+    #     pass
 
     def main_loop(self):
         while True:
@@ -113,6 +127,7 @@ class Game:
 
             # Изменение объектов и многое др.
             self.tick()
+
             # Обновление экрана
             pygame.display.update()
 

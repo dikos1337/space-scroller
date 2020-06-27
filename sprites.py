@@ -24,11 +24,11 @@ class SpriteMeteorite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         all_sprites = [file_name for file_name in os.listdir(Config.img_folder) if 'meteorite' in file_name]
         random_sprite = random.choice(all_sprites)
-        random_size = random.choice([size for size in range(50, 101, 10)])
+        random_size = random.randrange(50, 101)
 
         image = pygame.image.load(os.path.join(Config.img_folder, random_sprite))
         image = pygame.transform.scale(image, (random_size, random_size))  # Задаю случайный размер
-        image = pygame.transform.rotate(image, random.randint(0, 360))  # Задаю случайный поворот
+        image = pygame.transform.rotate(image, random.randrange(360))  # Задаю случайный поворот
         self.image = image.convert_alpha()
         self.rect = self.image.get_rect(center=(random.randint(0, Config.WIDTH), random.randint(-Config.HEIGHT, 0)))
         self.radius = int(self.rect.width * 0.6 / 2)

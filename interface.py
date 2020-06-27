@@ -17,6 +17,16 @@ class Interface:
         """Меню настроек"""
         pass
 
+    def scores(self,surface, text, size, x, y):
+        """Считаю игровые очки"""
+        font_name = pygame.font.match_font('arial')
+        font = pygame.font.Font(font_name, size)
+        text_surface = font.render(text, True, (255,255,255))
+        text_rect = text_surface.get_rect()
+        text_rect.midleft = (x, y)
+        surface.blit(text_surface, text_rect)
+
+
     def leaderboard(self):
         """Рейтинг по набраным за игру очкам"""
         pass
