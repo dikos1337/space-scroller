@@ -12,7 +12,7 @@ class SpritePlayerSpaceship(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         player_img = pygame.image.load(os.path.join(Config.img_folder, 'spaceship.png'))
-        player_img = pygame.transform.scale(player_img, (160, 160))
+        player_img = pygame.transform.scale(player_img, (120, 120))
         self.image = player_img.convert_alpha()
         self.rect = self.image.get_rect(center=(Config.SpritePlayerSpaceship_init_x,
                                                 Config.SpritePlayerSpaceship_init_y))

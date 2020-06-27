@@ -24,8 +24,8 @@ class Game:
             self.meteorites.add(Meteorite())
 
         for meteorite in self.meteorites:
-            meteorite.speed = random.choice(range(1, 6))
-            meteorite.spread = random.choice(range(-5, 6))
+            meteorite.speed = random.choice(range(1, 3))
+            meteorite.spread = random.choice(range(-3, 4))
 
         self.main_loop()  # Запускаю main loop
 
