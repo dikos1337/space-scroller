@@ -25,10 +25,6 @@ class Game:
         for _ in range(Config.total_meteorites):
             self.meteorites.add(Meteorite())
 
-        # for meteorite in self.meteorites:
-        #     meteorite.speed = random.choice(range(1, 3))
-        #     meteorite.spread = random.choice(range(-3, 4))
-
         self.main_loop()  # Запускаю main loop
 
     def check_meteorites(self):
