@@ -16,9 +16,8 @@ class Meteorite(SpriteMeteorite):
         self.rect.y += self.speed
         self.rect.x += self.spread
 
-        # Обработка случаев если метеорит улетел за пределы окна, тогда я перемещаю его выше за основное окно
+        # Обработка случаев если метеорит улетел за пределы окна, потом он сам заспавнится заного
         if self.rect.y > Config.HEIGHT:
-            self.rect.y = random.randint(-Config.WIDTH, -300)
+            self.kill()
         if self.rect.x > (Config.WIDTH + (self.radius * 2)) or self.rect.x < -(self.radius * 2):
-            self.rect.x = random.randint(0, Config.HEIGHT)
-            self.rect.y = random.randint(-Config.WIDTH, -(self.radius * 2))
+            self.kill()
