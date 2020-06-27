@@ -15,6 +15,7 @@ class SpritePlayerSpaceship(pygame.sprite.Sprite):
         self.image = player_img.convert_alpha()
         self.rect = self.image.get_rect(center=(Config.SpritePlayerSpaceship_init_x,
                                                 Config.SpritePlayerSpaceship_init_y))
+        self.radius = int(self.rect.width / 2)
 
 
 class SpriteMeteorite(pygame.sprite.Sprite):
@@ -30,6 +31,7 @@ class SpriteMeteorite(pygame.sprite.Sprite):
         image = pygame.transform.rotate(image, random.randint(0, 360))  # Задаю случайный поворот
         self.image = image.convert_alpha()
         self.rect = self.image.get_rect(center=(random.randint(0, Config.WIDTH), random.randint(-Config.HEIGHT, 0)))
+        self.radius = int(self.rect.width * 0.6 / 2)
 
 
 class SpriteBackGround(pygame.sprite.Sprite):

@@ -32,7 +32,7 @@ class Game:
     def check_collisions(self):
         """Обработка столкновений корабля с метеоритами"""
         # Проверяю корабль и метеориты
-        collide = pygame.sprite.spritecollide(self.player, self.meteorites, True)
+        collide = pygame.sprite.spritecollide(self.player, self.meteorites, True, pygame.sprite.collide_circle)
         if collide:
             self.player.health -= 1
 
