@@ -2,7 +2,7 @@ import os
 
 
 class Config:
-    TITLE = 'Spaceship game'
+    TITLE = 'Space Shooter'
     FPS = 60
     WIDTH = 1200  # Ширина окна игры
     HEIGHT = 800  # Высота окна игры
