@@ -7,7 +7,8 @@ class PlayerSpaceship(SpritePlayerSpaceship):
     SPACESHIP_ATTACK = pygame.USEREVENT + 1
     SPACESHIP_ATTACKSPEED = 500  # 2 attacks per second (1000/500=2)
     movespeed = 5  # pixels per frame
-    health = 5  # Здоровье корабля
+    max_health = 5
+    health = max_health  # Здоровье корабля
 
     pygame.time.set_timer(SPACESHIP_ATTACK, SPACESHIP_ATTACKSPEED)
 

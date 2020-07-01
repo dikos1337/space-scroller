@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 from sprites import SpriteBackGround
@@ -6,6 +8,7 @@ from meteorite import Meteorite
 from config import Config
 from interface import Interface
 from sounds import Sounds
+from buffs import BuffHealthRecovery
 
 
 class Game:
@@ -17,7 +20,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
-        self.lasers = pygame.sprite.Group()
+        self.lasers = pygame.sprite.Group()  # Выстрелы из корабля (лазеры)
+        self.powerups = pygame.sprite.Group()  # Бафы
         self.score = 0
 
         # Создаю метеориты
@@ -41,10 +45,22 @@ class Game:
 
         # Проверяю лазеры и метеориты
         laser_hits = pygame.sprite.groupcollide(self.meteorites, self.lasers, True, True, pygame.sprite.collide_circle)
+
         # Если лазер попадает в метеорит, то начисляю очки
         for hit in laser_hits:
             self.score += 50 - hit.radius  # Тут радиус метеорита, у лазера нет свойтва радиус.
             Sounds.explosion_sound.play()
+
+            # C некоторой вероятностью из метеорита упадет баф
+            if random.random() < Config.BUFF_PROC_CHANCE:
+                healthup = BuffHealthRecovery(hit.rect.center)
+                self.powerups.add(healthup)
+
+        if len(self.powerups) > 0:
+            powerups_hits = pygame.sprite.spritecollide(self.player, self.powerups, True, pygame.sprite.collide_circle)
+            for _ in powerups_hits:
+                if self.player.health < self.player.max_health:
+                    self.player.health += 1
 
     def check_health_points(self):
         """Проверка запаса здоровья корабля"""
@@ -89,15 +105,21 @@ class Game:
         self.meteorites.draw(self.main_window)
 
         # Отрисовываю лазеры
-        self.lasers.update()
-        self.lasers.draw(self.main_window)
+        if len(self.lasers) > 0:
+            self.lasers.update()
+            self.lasers.draw(self.main_window)
+
+        # Отрисовываю бафы
+        if len(self.powerups) > 0:
+            self.powerups.update()
+            self.powerups.draw(self.main_window)
 
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
         # Вывожу на экран очки здоровья
         Interface.health_points(self,
                                 surface=self.main_window,
-                                start_x=int(Config.SpriteHealthPoints_size[0] / 2),
+                                start_x=Config.SpriteHealthPoints_size[0] // 2,
                                 player_hp=self.player.health)
 
         # Вывожу счёт

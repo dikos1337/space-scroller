@@ -67,9 +67,21 @@ class SpriteHealthPoints(pygame.sprite.Sprite):
     """Спрайт для очков здоровья"""
     def __init__(self, x):
         pygame.sprite.Sprite.__init__(self)
-        player_img = pygame.image.load(os.path.join(Config.img_folder, 'hp.png'))
-        player_img = pygame.transform.scale(player_img, (Config.SpriteHealthPoints_size[0],
+        health_img = pygame.image.load(os.path.join(Config.img_folder, 'hp.png'))
+        health_img = pygame.transform.scale(health_img, (Config.SpriteHealthPoints_size[0],
                                                          Config.SpriteHealthPoints_size[1]))
-        self.image = player_img.convert_alpha()
+        self.image = health_img.convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.centerx = x
+
+
+class SpriteHealthRecovery(pygame.sprite.Sprite):
+    """Спрайт для очков здоровья"""
+    def __init__(self, center):
+        pygame.sprite.Sprite.__init__(self)
+        healthrecovery_img = pygame.image.load(os.path.join(Config.img_folder, 'health_recovery.png'))
+        healthrecovery_img = pygame.transform.scale(healthrecovery_img, (35, 35))
+        self.image = healthrecovery_img.convert_alpha()
+        self.rect = self.image.get_rect(center=(random.randint(0, Config.WIDTH), random.randint(-Config.HEIGHT, 0)))
+        self.radius = int(self.rect.width / 2)
+        self.rect.center = center
