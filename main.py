@@ -20,20 +20,29 @@ class Game:
         self.clock = pygame.time.Clock()
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
+        self.score = 0
+
+        # Группа для всех спрайтов, их я буду обновлять и отрисовывать
+        self.all_sprites = pygame.sprite.Group()
+
+        # Группы для проверки коллизий
         self.lasers = pygame.sprite.Group()  # Выстрелы из корабля (лазеры)
         self.powerups = pygame.sprite.Group()  # Бафы
-        self.score = 0
 
         # Создаю метеориты
         self.meteorites = pygame.sprite.Group()
         for _ in range(Config.TOTAL_METEORITES):
-            self.meteorites.add(Meteorite())
+            tmp_meteorite = Meteorite()
+            self.meteorites.add(tmp_meteorite)
+            self.all_sprites.add(tmp_meteorite)
 
         self.main_loop()  # Запускаю main loop
 
     def check_meteorites(self):
         if len(self.meteorites) < Config.TOTAL_METEORITES:
-            self.meteorites.add(Meteorite())
+            tmp_meteorite = Meteorite()
+            self.meteorites.add(tmp_meteorite)
+            self.all_sprites.add(tmp_meteorite)
 
     def check_collisions(self):
         """Обработка столкновений корабля с метеоритами"""
@@ -53,13 +62,14 @@ class Game:
 
             # C некоторой вероятностью из метеорита упадет баф
             if random.random() < Config.BUFF_PROC_CHANCE:
-                healthup = BuffHealthRecovery(hit.rect.center)
-                self.powerups.add(healthup)
+                health_up = BuffHealthRecovery(hit.rect.center)
+                self.powerups.add(health_up)
+                self.all_sprites.add(health_up)
 
         if len(self.powerups) > 0:
             powerups_hits = pygame.sprite.spritecollide(self.player, self.powerups, True, pygame.sprite.collide_circle)
             for _ in powerups_hits:
-                if self.player.health < self.player.max_health:
+                if self.player.health < self.player.MAX_HEALTH:
                     self.player.health += 1
 
     def check_health_points(self):
@@ -72,9 +82,11 @@ class Game:
 
     def event_attack(self, event):
         """Проверка атаки"""
-        if event.type == self.player.SPACESHIP_ATTACK:
+        if event.type == self.player.SPACESHIP_ATTACK_EVENT:
             if pygame.key.get_pressed()[pygame.K_SPACE]:
-                self.lasers.add(self.player.shoot())
+                laser = self.player.shoot()
+                self.lasers.add(laser)
+                self.all_sprites.add(laser)
                 Sounds.shoot_sound.play()
 
     def event_quit(self, event):
@@ -100,19 +112,9 @@ class Game:
         """То, что отрисовывается каждый кадр"""
         self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
 
-        # Отрисовываю метеориты
-        self.meteorites.update()
-        self.meteorites.draw(self.main_window)
-
-        # Отрисовываю лазеры
-        if len(self.lasers) > 0:
-            self.lasers.update()
-            self.lasers.draw(self.main_window)
-
-        # Отрисовываю бафы
-        if len(self.powerups) > 0:
-            self.powerups.update()
-            self.powerups.draw(self.main_window)
+        # Отрисоваю метеориты, лазеры, бафы
+        self.all_sprites.update()
+        self.all_sprites.draw(self.main_window)
 
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
@@ -139,7 +141,9 @@ class Game:
         self.draw()
 
     def main_loop(self):
+        # Фоновая музыка
         Sounds.background_sound.play(loops=-1)
+
         while True:
             # Задержка
             self.clock.tick(Config.FPS)
