@@ -36,8 +36,8 @@ class Interface:
         # FIXME: Сделать так чтоб функция возвращала готовое полотно а не принемала основное(и на нем рисовала)
         healthpoints = pygame.sprite.Group()
         for x in range(start_x,
-                       start_x + Config.SpriteHealthPoints_size[0] * player_hp,
-                       Config.SpriteHealthPoints_size[0]):
+                       start_x + Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp,
+                       Config.SPRITE_HEALTHPOINTS_SIZE[0]):
             healthpoints.add(SpriteHealthPoints(x))
 
         for hp in healthpoints:

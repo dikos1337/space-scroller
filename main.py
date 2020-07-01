@@ -26,13 +26,13 @@ class Game:
 
         # Создаю метеориты
         self.meteorites = pygame.sprite.Group()
-        for _ in range(Config.total_meteorites):
+        for _ in range(Config.TOTAL_METEORITES):
             self.meteorites.add(Meteorite())
 
         self.main_loop()  # Запускаю main loop
 
     def check_meteorites(self):
-        if len(self.meteorites) < Config.total_meteorites:
+        if len(self.meteorites) < Config.TOTAL_METEORITES:
             self.meteorites.add(Meteorite())
 
     def check_collisions(self):
@@ -119,7 +119,7 @@ class Game:
         # Вывожу на экран очки здоровья
         Interface.health_points(self,
                                 surface=self.main_window,
-                                start_x=Config.SpriteHealthPoints_size[0] // 2,
+                                start_x=Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2,
                                 player_hp=self.player.health)
 
         # Вывожу счёт
@@ -128,7 +128,7 @@ class Game:
                          text='Scores: ' + str(self.score),
                          size=25,
                          x=0,
-                         y=Config.SpriteHealthPoints_size[1] + 15)
+                         y=Config.SPRITE_HEALTHPOINTS_SIZE[1] + 15)
 
     def tick(self):
         """То что происходит каждый кадр"""
