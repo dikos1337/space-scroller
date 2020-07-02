@@ -125,12 +125,9 @@ class Game:
                                 player_hp=self.player.health)
 
         # Вывожу счёт
-        Interface.scores(self,
-                         surface=self.main_window,
-                         text='Scores: ' + str(self.score),
-                         size=25,
-                         x=0,
-                         y=Config.SPRITE_HEALTHPOINTS_SIZE[1] + 15)
+        text_surface, text_rect = Interface.scores(self, text='Score: ' + str(self.score), text_size=25, x=0,
+                                                   y=Config.SPRITE_HEALTHPOINTS_SIZE[1] + 15)
+        self.main_window.blit(text_surface, text_rect)
 
     def tick(self):
         """То что происходит каждый кадр"""
