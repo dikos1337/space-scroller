@@ -12,7 +12,7 @@ class Config:
     SPRITE_PLAYER_SPACESHIP_INIT_Y = HEIGHT / 1.2  # координаты спавна корабля по y
     SPRITE_HEALTHPOINTS_SIZE = (30, 25)  # x,y ; pixels
 
-    BUFF_PROC_CHANCE = 0.05  # Шнас прока бафа 5%
+    BUFF_PROC_CHANCE = 0.03  # Шнас прока бафа 3%
 
     TOTAL_METEORITES = 35  # Количество метеоритов на уровне
 

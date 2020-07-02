@@ -120,10 +120,11 @@ class Game:
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
         # Вывожу на экран очки здоровья
-        healthpoints_surface = Interface.health_points(start_x=Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2,
-                                                       player_hp=self.player.health)
+        healthpoints_surface, healthpoints_rect = Interface.health_points(
+            start_x=Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2,
+            player_hp=self.player.health)
 
-        self.main_window.blit(healthpoints_surface, healthpoints_surface.get_rect())
+        self.main_window.blit(healthpoints_surface, healthpoints_rect)
 
         # Вывожу счёт
         text_surface, text_rect = Interface.scores(text='Score: ' + str(self.score), text_size=25, x=0,

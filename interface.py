@@ -41,6 +41,8 @@ class Interface:
                                                + Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp,
                                                Config.SPRITE_HEALTHPOINTS_SIZE[1]))
         healthpoints_surface.set_colorkey((0, 0, 0))  # Делаю фон прозрачным
+        healthpoints_rect = healthpoints_surface.get_rect()
+
         healthpoints = pygame.sprite.Group()
 
         # Создаю сердечки
@@ -51,4 +53,4 @@ class Interface:
         for hp in healthpoints:
             healthpoints_surface.blit(hp.image, hp.rect)
 
-        return healthpoints_surface
+        return healthpoints_surface, healthpoints_rect
