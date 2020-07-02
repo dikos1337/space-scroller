@@ -36,49 +36,19 @@ class Interface:
     @staticmethod
     def health_points(start_x, player_hp):
         """Отображения здоровье игрока"""
+        # Создаю полотно и определяю его размер в зависимости от текущего здоровья
         healthpoints_surface = pygame.Surface((Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2
                                                + Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp,
                                                Config.SPRITE_HEALTHPOINTS_SIZE[1]))
-        healthpoints_surface.set_colorkey((0, 0, 0))
+        healthpoints_surface.set_colorkey((0, 0, 0))  # Делаю фон прозрачным
         healthpoints = pygame.sprite.Group()
 
+        # Создаю сердечки
         for x in range(start_x, Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp, Config.SPRITE_HEALTHPOINTS_SIZE[0]):
             healthpoints.add(SpriteHealthPoints(x))
 
+        # Рисую сердечки
         for hp in healthpoints:
             healthpoints_surface.blit(hp.image, hp.rect)
 
         return healthpoints_surface
-
-# pygame.init()
-# clock = pygame.time.Clock()
-# FPS = 30
-# BLACK = (0, 0, 0)
-# screen = pygame.display.set_mode((500, 500))
-# running = True
-# healthpoints = pygame.sprite.Group()
-#
-# start_x = 30
-# player_hp = 5
-# for x in range(start_x,start_x + 60*player_hp,60):
-#     healthpoints.add(SpriteHealthPoints(x))
-# #    [SpriteHealthPoints(x+60) for x in range(0,60*5,60)]
-# while running:
-#     # Держим цикл на правильной скорости
-#     clock.tick(FPS)
-#     # Ввод процесса (события)
-#     for event in pygame.event.get():
-#         # check for closing window
-#         if event.type == pygame.QUIT:
-#             running = False
-#
-#     # Обновление
-
-#     # Рендеринг
-#     screen.fill(BLACK)
-#     for hp in healthpoints:
-#         screen.blit(hp.image, hp.rect)
-#     # После отрисовки всего, переворачиваем экран
-#     pygame.display.update()
-#
-# pygame.quit()
