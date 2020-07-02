@@ -3,8 +3,10 @@ import pygame
 from sprites import SpriteHealthPoints
 from config import Config
 
+
 class Interface:
     """Класс с пользовательским интерфейсом"""
+
     def main_menu(self):
         """Основное меню"""
         pass
@@ -17,11 +19,12 @@ class Interface:
         """Меню настроек"""
         pass
 
-    def scores(self, text, text_size, x, y):
+    @staticmethod
+    def scores(text, text_size, x, y):
         """Считаю игровые очки"""
         font_name = pygame.font.match_font('arial')
         font = pygame.font.Font(font_name, text_size)
-        text_surface = font.render(text, True, (255,255,255))
+        text_surface = font.render(text, True, (255, 255, 255))
         text_rect = text_surface.get_rect()
         text_rect.midleft = (x, y)
         return text_surface, text_rect
@@ -30,17 +33,22 @@ class Interface:
         """Рейтинг по набраным за игру очкам"""
         pass
 
-    def health_points(self,surface,start_x,player_hp):
+    @staticmethod
+    def health_points(start_x, player_hp):
         """Отображения здоровье игрока"""
-        # FIXME: Сделать так чтоб функция возвращала готовое полотно а не принемала основное(и на нем рисовала)
+        healthpoints_surface = pygame.Surface((Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2
+                                               + Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp,
+                                               Config.SPRITE_HEALTHPOINTS_SIZE[1]))
+        healthpoints_surface.set_colorkey((0, 0, 0))
         healthpoints = pygame.sprite.Group()
-        for x in range(start_x,
-                       start_x + Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp,
-                       Config.SPRITE_HEALTHPOINTS_SIZE[0]):
+
+        for x in range(start_x, Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp, Config.SPRITE_HEALTHPOINTS_SIZE[0]):
             healthpoints.add(SpriteHealthPoints(x))
 
         for hp in healthpoints:
-            surface.blit(hp.image, hp.rect)
+            healthpoints_surface.blit(hp.image, hp.rect)
+
+        return healthpoints_surface
 
 # pygame.init()
 # clock = pygame.time.Clock()

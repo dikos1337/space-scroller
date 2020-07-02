@@ -89,7 +89,8 @@ class Game:
                 self.all_sprites.add(laser)
                 Sounds.shoot_sound.play()
 
-    def event_quit(self, event):
+    @staticmethod
+    def event_quit(event):
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
@@ -119,10 +120,11 @@ class Game:
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
         # Вывожу на экран очки здоровья
-        Interface.health_points(self,
-                                surface=self.main_window,
-                                start_x=Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2,
-                                player_hp=self.player.health)
+        healthpoints_surface = Interface.health_points(self,
+                                                       start_x=Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2,
+                                                       player_hp=self.player.health)
+
+        self.main_window.blit(healthpoints_surface, healthpoints_surface.get_rect())
 
         # Вывожу счёт
         text_surface, text_rect = Interface.scores(self, text='Score: ' + str(self.score), text_size=25, x=0,
