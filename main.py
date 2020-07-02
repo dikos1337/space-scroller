@@ -2,13 +2,13 @@ import random
 
 import pygame
 
+from buffs import BuffHealthRecovery, BuffWeaponUpgrade
 from sprites import SpriteBackGround
 from player import PlayerSpaceship
 from meteorite import Meteorite
 from config import Config
 from interface import Interface
 from sounds import Sounds
-from buffs import BuffHealthRecovery
 
 
 class Game:
@@ -62,15 +62,23 @@ class Game:
 
             # C некоторой вероятностью из метеорита упадет баф
             if random.random() < Config.BUFF_PROC_CHANCE:
-                health_up = BuffHealthRecovery(hit.rect.center)
-                self.powerups.add(health_up)
-                self.all_sprites.add(health_up)
+                random_buff = random.choice([BuffHealthRecovery(hit.rect.center), BuffWeaponUpgrade(hit.rect.center)])
+                self.powerups.add(random_buff)
+                self.all_sprites.add(random_buff)
 
+        # Проверяю бафы
         if len(self.powerups) > 0:
             powerups_hits = pygame.sprite.spritecollide(self.player, self.powerups, True, pygame.sprite.collide_circle)
-            for _ in powerups_hits:
-                if self.player.health < self.player.MAX_HEALTH:
-                    self.player.health += 1
+            for buff in powerups_hits:
+                if type(buff) == BuffHealthRecovery:
+                    if self.player.health < self.player.MAX_HEALTH:
+                        self.player.health += 1
+
+                if type(buff) == BuffWeaponUpgrade:
+                    if self.player.spaceship_attackspeed > self.player.SPACESHIP_ATTACKSPEED_LIMIT:
+                        self.player.spaceship_attackspeed = int(self.player.spaceship_attackspeed
+                                                                / Config.BUFF_ATTACKSPEED_UPG_RATE)
+                        pygame.time.set_timer(self.player.SPACESHIP_ATTACK_EVENT, self.player.spaceship_attackspeed)
 
     def check_health_points(self):
         """Проверка запаса здоровья корабля"""
@@ -135,7 +143,7 @@ class Game:
         """То что происходит каждый кадр"""
         # Обработка событий
         self.ckeck_events()
-
+        print(self.player.spaceship_attackspeed)
         # Отрисовка кадра
         self.draw()
 

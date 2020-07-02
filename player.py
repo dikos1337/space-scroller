@@ -5,12 +5,13 @@ from sprites import SpritePlayerSpaceship, SpriteLaser
 
 class PlayerSpaceship(SpritePlayerSpaceship):
     SPACESHIP_ATTACK_EVENT = pygame.USEREVENT + 1
-    SPACESHIP_ATTACKSPEED = 1000  # 2 attacks per second (1000/500=2)
+    spaceship_attackspeed = 1000  # 1 attack per second
+    SPACESHIP_ATTACKSPEED_LIMIT = 500  # 2 attacks per second (1000/500=2)
     MOVESPEED = 5  # pixels per frame
     MAX_HEALTH = 5
     health = MAX_HEALTH  # Здоровье корабля
 
-    pygame.time.set_timer(SPACESHIP_ATTACK_EVENT, SPACESHIP_ATTACKSPEED)
+    pygame.time.set_timer(SPACESHIP_ATTACK_EVENT, spaceship_attackspeed)
 
     def move(self):
         """Управление кораблем"""

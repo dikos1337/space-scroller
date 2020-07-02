@@ -13,6 +13,7 @@ class Config:
     SPRITE_HEALTHPOINTS_SIZE = (30, 25)  # x,y ; pixels
 
     BUFF_PROC_CHANCE = 0.03  # Шнас прока бафа 3%
+    BUFF_ATTACKSPEED_UPG_RATE = 1.05  # Увелечение скорости атаки на 5% за каждый баф
 
     TOTAL_METEORITES = 35  # Количество метеоритов на уровне
 
