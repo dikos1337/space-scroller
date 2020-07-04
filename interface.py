@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 import pygame
 
 from sprites import SpriteHealthPoints
@@ -20,6 +22,7 @@ class Interface:
         pass
 
     @staticmethod
+    @lru_cache
     def scores(text, text_size, x, y):
         """Считаю игровые очки"""
         font_name = pygame.font.match_font('arial')
@@ -34,6 +37,7 @@ class Interface:
         pass
 
     @staticmethod
+    @lru_cache
     def health_points(start_x, player_hp):
         """Отображения здоровье игрока"""
         # Создаю полотно и определяю его размер в зависимости от текущего здоровья

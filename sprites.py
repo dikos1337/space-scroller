@@ -76,7 +76,7 @@ class SpriteHealthPoints(pygame.sprite.Sprite):
 
 
 class SpriteHealthRecovery(pygame.sprite.Sprite):
-    """Спрайт для очков здоровья"""
+    """Спрайт для бафа востановления очков здоровья"""
     def __init__(self, center):
         pygame.sprite.Sprite.__init__(self)
         healthrecovery_img = pygame.image.load(os.path.join(Config.IMG_FOLDER, 'health_recovery.png'))
@@ -88,7 +88,7 @@ class SpriteHealthRecovery(pygame.sprite.Sprite):
 
 
 class SpriteWeaponUpgrade(pygame.sprite.Sprite):
-    """Спрайт для очков здоровья"""
+    """Спрайт для бафа скорости атаки корабля"""
     def __init__(self, center):
         pygame.sprite.Sprite.__init__(self)
         weapon_upgrade_img = pygame.image.load(os.path.join(Config.IMG_FOLDER, 'weapon_upgrade.png'))

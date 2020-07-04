@@ -143,7 +143,7 @@ class Game:
         """То что происходит каждый кадр"""
         # Обработка событий
         self.ckeck_events()
-        print(self.player.spaceship_attackspeed)
+
         # Отрисовка кадра
         self.draw()
 
