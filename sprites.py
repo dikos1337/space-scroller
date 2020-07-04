@@ -68,8 +68,8 @@ class SpriteHealthPoints(pygame.sprite.Sprite):
     def __init__(self, x):
         pygame.sprite.Sprite.__init__(self)
         health_img = pygame.image.load(os.path.join(Config.IMG_FOLDER, 'hp.png'))
-        health_img = pygame.transform.scale(health_img, (Config.SPRITE_HEALTHPOINTS_SIZE[0],
-                                                         Config.SPRITE_HEALTHPOINTS_SIZE[1]))
+        health_img = pygame.transform.scale(health_img, (Config.SPRITE_HEALTH_POINTS_SIZE[0],
+                                                         Config.SPRITE_HEALTH_POINTS_SIZE[1]))
         self.image = health_img.convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.centerx = x

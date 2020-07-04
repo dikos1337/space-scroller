@@ -41,20 +41,16 @@ class Interface:
     def health_points(start_x, player_hp):
         """Отображения здоровье игрока"""
         # Создаю полотно и определяю его размер в зависимости от текущего здоровья
-        healthpoints_surface = pygame.Surface((Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2
-                                               + Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp,
-                                               Config.SPRITE_HEALTHPOINTS_SIZE[1]))
+        healthpoints_surface = pygame.Surface((Config.SPRITE_HEALTH_POINTS_SIZE[0] // 2
+                                               + Config.SPRITE_HEALTH_POINTS_SIZE[0] * player_hp,
+                                               Config.SPRITE_HEALTH_POINTS_SIZE[1]))
+
         healthpoints_surface.set_colorkey((0, 0, 0))  # Делаю фон прозрачным
-        healthpoints_rect = healthpoints_surface.get_rect()
+        healthpoints_surface_rect = healthpoints_surface.get_rect()
 
-        healthpoints = pygame.sprite.Group()
-
-        # Создаю сердечки
-        for x in range(start_x, Config.SPRITE_HEALTHPOINTS_SIZE[0] * player_hp, Config.SPRITE_HEALTHPOINTS_SIZE[0]):
-            healthpoints.add(SpriteHealthPoints(x))
-
-        # Рисую сердечки
-        for hp in healthpoints:
+        # Создаю и рисую сердечки
+        for x in range(start_x, Config.SPRITE_HEALTH_POINTS_SIZE[0] * player_hp, Config.SPRITE_HEALTH_POINTS_SIZE[0]):
+            hp = SpriteHealthPoints(x)
             healthpoints_surface.blit(hp.image, hp.rect)
 
-        return healthpoints_surface, healthpoints_rect
+        return healthpoints_surface, healthpoints_surface_rect

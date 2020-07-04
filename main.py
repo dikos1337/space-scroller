@@ -75,10 +75,10 @@ class Game:
                         self.player.health += 1
 
                 if type(buff) == BuffWeaponUpgrade:
-                    if self.player.spaceship_attackspeed > self.player.SPACESHIP_ATTACKSPEED_LIMIT:
-                        self.player.spaceship_attackspeed = int(self.player.spaceship_attackspeed
-                                                                / Config.BUFF_ATTACKSPEED_UPG_RATE)
-                        pygame.time.set_timer(self.player.SPACESHIP_ATTACK_EVENT, self.player.spaceship_attackspeed)
+                    if self.player.spaceship_attack_speed > self.player.SPACESHIP_ATTACK_SPEED_LIMIT:
+                        self.player.spaceship_attack_speed = int(self.player.spaceship_attack_speed
+                                                                 / Config.BUFF_ATTACK_SPEED_UPG_RATE)
+                        pygame.time.set_timer(self.player.SPACESHIP_ATTACK_EVENT, self.player.spaceship_attack_speed)
 
     def check_health_points(self):
         """Проверка запаса здоровья корабля"""
@@ -129,14 +129,14 @@ class Game:
 
         # Вывожу на экран очки здоровья
         healthpoints_surface, healthpoints_rect = Interface.health_points(
-            start_x=Config.SPRITE_HEALTHPOINTS_SIZE[0] // 2,
+            start_x=Config.SPRITE_HEALTH_POINTS_SIZE[0] // 2,
             player_hp=self.player.health)
 
         self.main_window.blit(healthpoints_surface, healthpoints_rect)
 
         # Вывожу счёт
         text_surface, text_rect = Interface.scores(text='Score: ' + str(self.score), text_size=25, x=0,
-                                                   y=Config.SPRITE_HEALTHPOINTS_SIZE[1] + 15)
+                                                   y=Config.SPRITE_HEALTH_POINTS_SIZE[1] + 15)
         self.main_window.blit(text_surface, text_rect)
 
     def tick(self):

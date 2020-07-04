@@ -10,10 +10,10 @@ class Config:
     SPRITE_PLAYER_SPACESHIP_INIT_X = WIDTH / 2  # координаты спавна корабля по x
 
     SPRITE_PLAYER_SPACESHIP_INIT_Y = HEIGHT / 1.2  # координаты спавна корабля по y
-    SPRITE_HEALTHPOINTS_SIZE = (30, 25)  # x,y ; pixels
+    SPRITE_HEALTH_POINTS_SIZE = (30, 25)  # x,y ; pixels
 
     BUFF_PROC_CHANCE = 0.03  # Шнас прока бафа 3%
-    BUFF_ATTACKSPEED_UPG_RATE = 1.05  # Увелечение скорости атаки на 5% за каждый баф
+    BUFF_ATTACK_SPEED_UPG_RATE = 1.05  # Увелечение скорости атаки на 5% за каждый баф
 
     TOTAL_METEORITES = 35  # Количество метеоритов на уровне
 
