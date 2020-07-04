@@ -15,21 +15,30 @@ class Gui:
         menu_sprite = SpriteStartMenu()
         main_surface.blit(background.image, background.rect)
         start_menu = pygame.Surface((Config.WIDTH // 2, Config.HEIGHT // 2))
-        start_menu.set_colorkey((181, 230, 29))
+        start_menu.set_colorkey((181, 230, 29))  # Делаю прозрачный фон, тут зеленый цвет
         start_menu.blit(menu_sprite.image, menu_sprite.rect)
-        main_surface.blit(start_menu, start_menu.get_rect().center)
-        pygame.display.update()
-        start_game_button = ((359, 232), (831, 295))
-        pressed = pygame.mouse.get_pressed()
-        pos = pygame.mouse.get_pos()
+        main_surface.blit(start_menu, start_menu.get_rect().center)  # Отрисовываю по центру
+        pressed = pygame.mouse.get_pressed()  # Информация о нажатиях кнопок мышки
+        pos = pygame.mouse.get_pos()  # Информация о координатах мышки
 
-        if pressed[0] or pygame.key.get_pressed()[pygame.K_SPACE]:
+        # Проверка кнопки Start Game
+        start_game_button = ((360, 230), (830, 298))  # Координаты верхнего левого и правого нижнего угла кнопки
+        if pressed[0] or pygame.key.get_pressed()[pygame.K_SPACE]:  # На пробел игра тоже стартует
             if ((start_game_button[0][0] < pos[0] < start_game_button[1][0]) and (
                     start_game_button[0][1] < pos[1] < start_game_button[1][1])):
                 return "PLAY"
             if pygame.key.get_pressed()[pygame.K_SPACE]:
                 return "PLAY"
 
+        # Проверка кнопки Exit
+        exit_game_button = ((360, 525), (830, 593))  # Координаты верхнего левого и правого нижнего угла кнопки
+        if pressed[0] or pygame.key.get_pressed()[pygame.K_SPACE]:  # На пробел игра тоже стартует
+            if ((exit_game_button[0][0] < pos[0] < exit_game_button[1][0]) and (
+                    exit_game_button[0][1] < pos[1] < exit_game_button[1][1])):
+                pygame.quit()
+                quit()
+
+        pygame.display.update()
         return state
 
     def pause(self):

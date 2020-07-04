@@ -65,16 +65,13 @@ class Game:
 
     def tick(self):
         """То что происходит каждый кадр"""
-        # Обработка событий
-        self.events.ckeck_events()
 
-        # Отрисовка кадра
-        self.draw()
+        # NOTE: Не менять порядок вызовов draw и check_events
+        self.draw()  # Отрисовка кадра
+        self.events.ckeck_events()  # Обработка событий
 
     def main_loop(self):
-        # Фоновая музыка, try except чтобы при рестарте музыка не дублировалась,
-        # и не начиналась заного, а продолжала играть
-
+        # Фоновая музыка
         if self.background_sound_is_playing:
             pass
         else:
@@ -82,6 +79,9 @@ class Game:
             Sounds.background_sound.play(loops=-1)
 
         while True:
+            # Задержка
+            self.clock.tick(Config.FPS)
+
             if self.states.current_state == "RESTART":
                 self.__init__()
 
@@ -90,9 +90,6 @@ class Game:
                 self.states.current_state = Gui.start_menu(self.main_window, self.background, self.states.current_state)
 
             elif self.states.current_state == "PLAY":
-                # Задержка
-                self.clock.tick(Config.FPS)
-
                 # Цикл обработки событий
                 self.events.ckeck_events()
 
