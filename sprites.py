@@ -38,9 +38,19 @@ class SpriteBackGround(pygame.sprite.Sprite):
     """background sprite"""
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        player_img = pygame.image.load(os.path.join(Config.IMG_FOLDER, 'background.jpg'))
-        player_img = pygame.transform.scale(player_img, (Config.WIDTH, Config.HEIGHT))
-        self.image = player_img.convert()
+        background_img = pygame.image.load(os.path.join(Config.IMG_FOLDER, 'background.jpg'))
+        background_img = pygame.transform.scale(background_img, (Config.WIDTH, Config.HEIGHT))
+        self.image = background_img.convert()
+        self.rect = self.image.get_rect()
+
+
+class SpriteStartMenu(pygame.sprite.Sprite):
+    """start menu sprite"""
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        start_menu_img = pygame.image.load(os.path.join(Config.IMG_FOLDER, 'start_menu.png'))
+        start_menu_img = pygame.transform.scale(start_menu_img, (Config.WIDTH // 2, Config.HEIGHT // 2))
+        self.image = start_menu_img.convert()
         self.rect = self.image.get_rect()
 
 

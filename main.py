@@ -7,7 +7,7 @@ from sprites import SpriteBackGround
 from player import PlayerSpaceship
 from meteorite import Meteorite
 from config import Config
-from interface import Interface
+from gui import Gui
 from sounds import Sounds
 
 
@@ -128,16 +128,17 @@ class Game:
         self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
         # Вывожу на экран очки здоровья
-        healthpoints_surface, healthpoints_rect = Interface.health_points(
+        healthpoints_surface, healthpoints_rect = Gui.health_points(
             start_x=Config.SPRITE_HEALTH_POINTS_SIZE[0] // 2,
             player_hp=self.player.health)
 
         self.main_window.blit(healthpoints_surface, healthpoints_rect)
 
         # Вывожу счёт
-        text_surface, text_rect = Interface.scores(text='Score: ' + str(self.score), text_size=25, x=0,
-                                                   y=Config.SPRITE_HEALTH_POINTS_SIZE[1] + 15)
+        text_surface, text_rect = Gui.scores(text='Score: ' + str(self.score), text_size=25, x=0,
+                                             y=Config.SPRITE_HEALTH_POINTS_SIZE[1] + 15)
         self.main_window.blit(text_surface, text_rect)
+        # Gui.start_menu(self.main_window,self.background)
 
     def tick(self):
         """То что происходит каждый кадр"""
@@ -150,19 +151,23 @@ class Game:
     def main_loop(self):
         # Фоновая музыка
         Sounds.background_sound.play(loops=-1)
-
+        STATE = "START_MENU"
         while True:
-            # Задержка
-            self.clock.tick(Config.FPS)
+            if STATE == "START_MENU":
+                STATE = Gui.start_menu(self.main_window, self.background, STATE)
+                self.ckeck_events()
+            elif STATE == "PLAY":
+                # Задержка
+                self.clock.tick(Config.FPS)
 
-            # Цикл обработки событий
-            self.ckeck_events()
+                # Цикл обработки событий
+                self.ckeck_events()
 
-            # Изменение объектов и многое др.
-            self.tick()
+                # Изменение объектов и многое др.
+                self.tick()
 
-            # Обновление экрана
-            pygame.display.update()
+                # Обновление экрана
+                pygame.display.update()
 
 
 if __name__ == '__main__':

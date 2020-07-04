@@ -2,16 +2,32 @@ from functools import lru_cache
 
 import pygame
 
-from sprites import SpriteHealthPoints
+from sprites import SpriteHealthPoints, SpriteStartMenu
 from config import Config
 
 
-class Interface:
+class Gui:
     """Класс с пользовательским интерфейсом"""
 
-    def main_menu(self):
-        """Основное меню"""
-        pass
+    @staticmethod
+    def start_menu(main_surface, background, state):
+        """Стартовое меню игры"""
+        # background = SpriteBackGround()
+        menu_sprite = SpriteStartMenu()
+        main_surface.blit(background.image, background.rect)
+        start_menu = pygame.Surface((Config.WIDTH // 2, Config.HEIGHT // 2))
+        start_menu.set_colorkey((181, 230, 29))
+        start_menu.blit(menu_sprite.image, menu_sprite.rect)
+        main_surface.blit(start_menu, start_menu.get_rect().center)
+        pygame.display.update()
+        start_game_button = ((359, 232), ((831, 295)))
+        pressed = pygame.mouse.get_pressed()
+        pos = pygame.mouse.get_pos()
+        if pressed[0]:
+            if (start_game_button[0][0] < pos[0] < start_game_button[1][0]) and (
+                    start_game_button[0][1] < pos[1] < start_game_button[1][1]):
+                return "PLAY"
+        return state
 
     def pause(self):
         """Меню паузы"""
