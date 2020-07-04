@@ -12,7 +12,6 @@ class Gui:
     @staticmethod
     def start_menu(main_surface, background, state):
         """Стартовое меню игры"""
-        # background = SpriteBackGround()
         menu_sprite = SpriteStartMenu()
         main_surface.blit(background.image, background.rect)
         start_menu = pygame.Surface((Config.WIDTH // 2, Config.HEIGHT // 2))
@@ -20,13 +19,17 @@ class Gui:
         start_menu.blit(menu_sprite.image, menu_sprite.rect)
         main_surface.blit(start_menu, start_menu.get_rect().center)
         pygame.display.update()
-        start_game_button = ((359, 232), ((831, 295)))
+        start_game_button = ((359, 232), (831, 295))
         pressed = pygame.mouse.get_pressed()
         pos = pygame.mouse.get_pos()
-        if pressed[0]:
-            if (start_game_button[0][0] < pos[0] < start_game_button[1][0]) and (
-                    start_game_button[0][1] < pos[1] < start_game_button[1][1]):
+
+        if pressed[0] or pygame.key.get_pressed()[pygame.K_SPACE]:
+            if ((start_game_button[0][0] < pos[0] < start_game_button[1][0]) and (
+                    start_game_button[0][1] < pos[1] < start_game_button[1][1])):
                 return "PLAY"
+            if pygame.key.get_pressed()[pygame.K_SPACE]:
+                return "PLAY"
+
         return state
 
     def pause(self):
@@ -38,7 +41,7 @@ class Gui:
         pass
 
     @staticmethod
-    @lru_cache
+    @lru_cache(maxsize=1)
     def scores(text, text_size, x, y):
         """Считаю игровые очки"""
         font_name = pygame.font.match_font('arial')
@@ -53,7 +56,7 @@ class Gui:
         pass
 
     @staticmethod
-    @lru_cache
+    @lru_cache(maxsize=5)
     def health_points(start_x, player_hp):
         """Отображения здоровье игрока"""
         # Создаю полотно и определяю его размер в зависимости от текущего здоровья
