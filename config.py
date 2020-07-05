@@ -20,3 +20,4 @@ class Config:
     GAME_FOLDER = os.path.dirname(__file__)  # Папка с игрой
     IMG_FOLDER = os.path.join(GAME_FOLDER, 'res', 'sprites')  # Папка со спрайтами
     SND_FOLDER = os.path.join(GAME_FOLDER, 'res', 'sounds')  # Папка с музыкой
+    DATABASE_NAME = 'database.db'

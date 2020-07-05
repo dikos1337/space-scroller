@@ -1,7 +1,7 @@
 import random
 
-from sprites import SpriteMeteorite
 from config import Config
+from sprites import SpriteMeteorite
 
 
 class Meteorite(SpriteMeteorite):

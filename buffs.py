@@ -1,5 +1,5 @@
-from sprites import SpriteHealthRecovery, SpriteWeaponUpgrade
 from config import Config
+from sprites import SpriteHealthRecovery, SpriteWeaponUpgrade
 
 
 class BuffHealthRecovery(SpriteHealthRecovery):

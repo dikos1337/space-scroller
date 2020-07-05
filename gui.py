@@ -2,8 +2,8 @@ from functools import lru_cache
 
 import pygame
 
-from sprites import SpriteHealthPoints, SpriteStartMenu
 from config import Config
+from sprites import SpriteHealthPoints, SpriteStartMenu
 
 
 class Gui:
@@ -32,7 +32,7 @@ class Gui:
 
         # Проверка кнопки Exit
         exit_game_button = ((360, 525), (830, 593))  # Координаты верхнего левого и правого нижнего угла кнопки
-        if pressed[0] or pygame.key.get_pressed()[pygame.K_SPACE]:  # На пробел игра тоже стартует
+        if pressed[0]:
             if ((exit_game_button[0][0] < pos[0] < exit_game_button[1][0]) and (
                     exit_game_button[0][1] < pos[1] < exit_game_button[1][1])):
                 pygame.quit()
