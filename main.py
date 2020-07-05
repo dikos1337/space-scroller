@@ -45,25 +45,33 @@ class Game:
 
     def draw(self):
         """То, что отрисовывается каждый кадр"""
-        self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
+        if self.states.current_state == "PLAY":
+            self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
 
-        # Отрисоваю метеориты, лазеры, бафы
-        self.all_sprites.update()
-        self.all_sprites.draw(self.main_window)
+            # Отрисоваю метеориты, лазеры, бафы
+            self.all_sprites.update()
+            self.all_sprites.draw(self.main_window)
 
-        self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
+            self.main_window.blit(self.player.image, self.player.rect)  # Отрисовываю игрока
 
-        # Вывожу на экран очки здоровья
-        healthpoints_surface, healthpoints_rect = Gui.health_points(
-            start_x=Config.SPRITE_HEALTH_POINTS_SIZE[0] // 2,
-            player_hp=self.player.health)
+            # Вывожу на экран очки здоровья
+            healthpoints_surface, healthpoints_rect = Gui.health_points(
+                start_x=Config.SPRITE_HEALTH_POINTS_SIZE[0] // 2,
+                player_hp=self.player.health)
 
-        self.main_window.blit(healthpoints_surface, healthpoints_rect)
+            self.main_window.blit(healthpoints_surface, healthpoints_rect)
 
-        # Вывожу счёт
-        text_surface, text_rect = Gui.scores(text='Score: ' + str(self.events.stats['score']), text_size=25, x=0,
-                                             y=Config.SPRITE_HEALTH_POINTS_SIZE[1] + 15)
-        self.main_window.blit(text_surface, text_rect)
+            # Вывожу счёт
+            text_surface, text_rect = Gui.scores(text='Score: ' + str(self.events.stats['score']), text_size=25, x=0,
+                                                 y=Config.SPRITE_HEALTH_POINTS_SIZE[1] + 15)
+            self.main_window.blit(text_surface, text_rect)
+
+        if self.states.current_state == "START_MENU":
+            self.main_window.blit(self.background.image, self.background.rect)  # Заливаю фон
+
+            # Рисую стартовое меню
+            start_menu, start_menu_rect = Gui.start_menu(self.states)
+            self.main_window.blit(start_menu, start_menu_rect)
 
     def tick(self):
         """То что происходит каждый кадр"""
@@ -81,25 +89,18 @@ class Game:
             Sounds.background_sound.play(loops=-1)
 
         while True:
-            # Задержка
-            self.clock.tick(Config.FPS)
-
             if self.states.current_state == "RESTART":
                 self.__init__()
 
-            if self.states.current_state == "START_MENU":
-                self.events.ckeck_events()
-                self.states.current_state = Gui.start_menu(self.main_window, self.background, self.states.current_state)
+            # Задержка
+            self.clock.tick(Config.FPS)
 
-            elif self.states.current_state == "PLAY":
-                # Цикл обработки событий
-                self.events.ckeck_events()
+            # Изменение объектов и многое др.
+            self.events.ckeck_events()
+            self.tick()
 
-                # Изменение объектов и многое др.
-                self.tick()
-
-                # Обновление экрана
-                pygame.display.update()
+            # Обновление экрана
+            pygame.display.update()
 
 
 if __name__ == '__main__':

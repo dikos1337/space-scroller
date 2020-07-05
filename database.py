@@ -12,18 +12,23 @@ class Database:
         self.cursor = self.conn.cursor()
 
     def insert_scores(self, datetime, score, sesion_time_sec, meteorite_hits):
-        self.cursor.execute("INSERT INTO leaderboard VALUES(?,?,?,?)", (datetime, score, sesion_time_sec, meteorite_hits))
+        self.cursor.execute("INSERT INTO leaderboard VALUES(?,?,?,?)",
+                            (datetime, score, sesion_time_sec, meteorite_hits))
         self.conn.commit()
 
     def close_connection(self):
         self.conn.close()
+
+    def get_leaderborad(self):
+        # SELECT * FROM leaderboard ORDER BY score DESC LIMIT 10
+        pass
 
     def _init_table(self):
         """Если база создаётся впервые, то надо проинициализоровать таблицу"""
         self.cursor.execute("""CREATE TABLE `leaderboard` (
                                 `datetime` DATETIME,
                                 `score` INT,
-                                `session_time_sec` int,
+                                `session_time_sec` INT,
                                 `meteorite_hits` INT
                                 );
                                """)
