@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 
 import pygame
 
@@ -9,18 +10,24 @@ from sounds import Sounds
 
 
 class Events:
-    def __init__(self, player, meteorites, lasers, powerups, all_sprites, states):
+    def __init__(self, player, meteorites, lasers, powerups, all_sprites, states, db):
         self.player = player
         self.meteorites = meteorites
         self.all_sprites = all_sprites
         self.lasers = lasers
         self.powerups = powerups
-        self.score = 0
         self.states = states
+        self.db = db
+        self.stats = {
+            "start_time": datetime.now(),
+            "score": 0,
+            "sessoin_time": 0,
+            "meteorite_hits": 0,
+        }
 
-    @staticmethod
-    def event_quit(event):
+    def event_quit(self, event):
         if event.type == pygame.QUIT:
+            self.db.close_connection()
             pygame.quit()
             exit()
 
@@ -43,7 +50,8 @@ class Events:
 
         # Если лазер попадает в метеорит, то начисляю очки
         for hit in laser_hits:
-            self.score += 50 - hit.radius  # Тут радиус метеорита, у лазера нет свойтва радиус.
+            self.stats['score'] += 50 - hit.radius  # Тут радиус метеорита, у лазера нет свойтва радиус.
+            self.stats['meteorite_hits'] += 1
             Sounds.explosion_sound.play()
 
             # C некоторой вероятностью из метеорита упадет баф
@@ -70,7 +78,15 @@ class Events:
         """Проверка запаса здоровья корабля"""
         if self.player.health < 1:
             print('Корабль разрушен')
-            print('Набранные очки:', self.score)
+            print('Набранные очки:', self.stats['score'])
+            # Вычисляю время сессии
+            self.stats['sesion_time'] = (datetime.now() - self.stats['start_time']).seconds
+
+            # Записываю очки в базу
+            self.db.insert_scores(self.stats['start_time'], int(self.stats['score']),
+                                  self.stats['sesion_time'], self.stats['meteorite_hits'])
+
+            # Перезапускаю игру
             self.states.restart()
 
     def event_attack(self, event):

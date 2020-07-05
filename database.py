@@ -11,8 +11,8 @@ class Database:
         self.conn = sqlite3.connect(Config.DATABASE_NAME)
         self.cursor = self.conn.cursor()
 
-    def insert_scores(self, datetime, score, sesion_time, meteorite_hits):
-        self.cursor.execute("INSERT INTO leaderboard VALUES(?,?,?,?)", (datetime, score, sesion_time, meteorite_hits))
+    def insert_scores(self, datetime, score, sesion_time_sec, meteorite_hits):
+        self.cursor.execute("INSERT INTO leaderboard VALUES(?,?,?,?)", (datetime, score, sesion_time_sec, meteorite_hits))
         self.conn.commit()
 
     def close_connection(self):
@@ -21,9 +21,9 @@ class Database:
     def _init_table(self):
         """Если база создаётся впервые, то надо проинициализоровать таблицу"""
         self.cursor.execute("""CREATE TABLE `leaderboard` (
-                                `datetime` DATETIME NOT NULL,
+                                `datetime` DATETIME,
                                 `score` INT,
-                                `session_time` TIME,
+                                `session_time_sec` int,
                                 `meteorite_hits` INT
                                 );
                                """)

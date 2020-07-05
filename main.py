@@ -1,12 +1,13 @@
 import pygame
 
-from events import Events
-from sprites import SpriteBackGround
-from player import PlayerSpaceship
-from meteorite import Meteorite
 from config import Config
+from database import Database
+from events import Events
 from gui import Gui
+from meteorite import Meteorite
+from player import PlayerSpaceship
 from sounds import Sounds
+from sprites import SpriteBackGround
 from states import States
 
 
@@ -22,6 +23,7 @@ class Game:
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
         self.states = States()
+        self.db = Database()
 
         # Группа для всех спрайтов, их я буду обновлять и отрисовывать
         self.all_sprites = pygame.sprite.Group()
@@ -38,7 +40,7 @@ class Game:
             self.all_sprites.add(tmp_meteorite)
 
         self.events = Events(self.player, self.meteorites, self.lasers,
-                             self.powerups, self.all_sprites, self.states)
+                             self.powerups, self.all_sprites, self.states, self.db)
         self.main_loop()  # Запускаю main loop
 
     def draw(self):
@@ -59,7 +61,7 @@ class Game:
         self.main_window.blit(healthpoints_surface, healthpoints_rect)
 
         # Вывожу счёт
-        text_surface, text_rect = Gui.scores(text='Score: ' + str(self.events.score), text_size=25, x=0,
+        text_surface, text_rect = Gui.scores(text='Score: ' + str(self.events.stats['score']), text_size=25, x=0,
                                              y=Config.SPRITE_HEALTH_POINTS_SIZE[1] + 15)
         self.main_window.blit(text_surface, text_rect)
 
