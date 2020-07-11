@@ -1,7 +1,6 @@
 import pygame
 
 from config import Config
-from database import Database
 from events import Events
 from gui import Gui
 from meteorite import Meteorite
@@ -23,7 +22,6 @@ class Game:
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
         self.states = States()
-        self.db = Database()
 
         # Группа для всех спрайтов, их я буду обновлять и отрисовывать
         self.all_sprites = pygame.sprite.Group()
@@ -40,7 +38,7 @@ class Game:
             self.all_sprites.add(tmp_meteorite)
 
         self.events = Events(self.player, self.meteorites, self.lasers,
-                             self.powerups, self.all_sprites, self.states, self.db)
+                             self.powerups, self.all_sprites, self.states)
         self.main_loop()  # Запускаю main loop
 
     def draw(self):
@@ -104,4 +102,4 @@ class Game:
 
 
 if __name__ == '__main__':
-    Game()
+    app = Game()

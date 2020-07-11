@@ -5,19 +5,20 @@ import pygame
 
 from buffs import BuffWeaponUpgrade, BuffHealthRecovery
 from config import Config
+from database import Database
 from meteorite import Meteorite
 from sounds import Sounds
 
 
 class Events:
-    def __init__(self, player, meteorites, lasers, powerups, all_sprites, states, db):
+    def __init__(self, player, meteorites, lasers, powerups, all_sprites, states):
         self.player = player
         self.meteorites = meteorites
         self.all_sprites = all_sprites
         self.lasers = lasers
         self.powerups = powerups
         self.states = states
-        self.db = db
+        self.db = Database()
         self.stats = {
             "start_time": datetime.now(),
             "score": 0,
@@ -56,7 +57,7 @@ class Events:
 
             # C некоторой вероятностью из метеорита упадет баф
             if random.random() < Config.BUFF_PROC_CHANCE:
-                random_buff = random.choice([BuffHealthRecovery(hit.rect.center), BuffWeaponUpgrade(hit.rect.center)])
+                random_buff = random.choice((BuffHealthRecovery(hit.rect.center), BuffWeaponUpgrade(hit.rect.center)))
                 self.powerups.add(random_buff)
                 self.all_sprites.add(random_buff)
 
@@ -81,6 +82,9 @@ class Events:
             print('Набранные очки:', self.stats['score'])
             # Вычисляю время сессии
             self.stats['sesion_time'] = (datetime.now() - self.stats['start_time']).seconds
+
+            # Костыль, чтоб успелось обрабаботься всё и в базу по 2 раза не писались очки
+            pygame.time.wait(100)
 
             # Записываю очки в базу
             self.db.insert_scores(self.stats['start_time'], int(self.stats['score']),

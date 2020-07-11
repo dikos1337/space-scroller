@@ -20,8 +20,11 @@ class Database:
         self.conn.close()
 
     def get_leaderborad(self):
-        # SELECT * FROM leaderboard ORDER BY score DESC LIMIT 10
-        pass
+        """Возвращает 10 записей из базы, отсортированных по очкам.
+        Возвращает список кортежей, пример : [('2020-07-05 22:13:52.484312', 3350, 177, 161),]"""
+        rows = self.cursor.execute("SELECT * FROM leaderboard ORDER BY score DESC LIMIT 10").fetchall()
+
+        return rows
 
     def _init_table(self):
         """Если база создаётся впервые, то надо проинициализоровать таблицу"""
