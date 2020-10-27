@@ -25,9 +25,9 @@ class Gui:
         if pressed[0] or pygame.key.get_pressed()[pygame.K_SPACE]:  # На пробел игра тоже стартует
             if ((start_game_button[0][0] < pos[0] < start_game_button[1][0]) and (
                     start_game_button[0][1] < pos[1] < start_game_button[1][1])):
-                states.current_state = "PLAY"
+                states.play()
             if pygame.key.get_pressed()[pygame.K_SPACE]:
-                states.current_state = "PLAY"
+                states.play()
 
         # Проверка кнопки Exit
         exit_game_button = ((360, 525), (830, 593))  # Координаты верхнего левого и правого нижнего угла кнопки
@@ -36,6 +36,8 @@ class Gui:
                     exit_game_button[0][1] < pos[1] < exit_game_button[1][1])):
                 pygame.quit()
                 quit()
+
+        # TODO: Проверка кнопки High Scores
 
         return start_menu, start_menu_rect
 
@@ -58,7 +60,7 @@ class Gui:
         text_rect.midleft = (x, y)
         return text_surface, text_rect
 
-    def leaderboard(self):
+    def high_scores(self):
         """Рейтинг по набраным за игру очкам"""
         pass
 

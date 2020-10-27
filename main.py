@@ -11,13 +11,18 @@ from states import States
 
 
 class Game:
-    background_sound_is_playing = False
+    # background_sound_is_playing = False
+    game_is_inited = False
 
     def __init__(self):
-        pygame.init()
-        pygame.display.set_caption(Config.TITLE)
+        if self.game_is_inited is False:
+            pygame.init()
+            pygame.display.set_caption(Config.TITLE)
 
-        self.main_window = pygame.display.set_mode((Config.WIDTH, Config.HEIGHT))
+            self.main_window = pygame.display.set_mode((Config.WIDTH, Config.HEIGHT))
+            Sounds.background_sound.play(loops=-1)  # Фоновая музыка
+            self.game_is_inited = True
+
         self.clock = pygame.time.Clock()
         self.background = SpriteBackGround()
         self.player = PlayerSpaceship()
@@ -80,11 +85,11 @@ class Game:
 
     def main_loop(self):
         # Фоновая музыка
-        if self.background_sound_is_playing:
-            pass
-        else:
-            self.background_sound_is_playing = True
-            Sounds.background_sound.play(loops=-1)
+        # if self.background_sound_is_playing:
+        #     pass
+        # else:
+        #     self.background_sound_is_playing = True
+        #     Sounds.background_sound.play(loops=-1)
 
         while True:
             if self.states.current_state == "RESTART":
