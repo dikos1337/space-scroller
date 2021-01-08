@@ -9,6 +9,7 @@ class Database:
     def __init__(self):
         self.conn = sqlite3.connect(Config.DATABASE_NAME)
         self.cursor = self.conn.cursor()
+        self._init_db()
 
     def insert_scores(self, datetime, score, session_time_sec, meteorite_hits):
         self.cursor.execute("INSERT INTO leaderboard VALUES(?,?,?,?)",
@@ -26,8 +27,8 @@ class Database:
         return query
 
     def _init_db(self):
-        """Если база создаётся впервые, то надо проинициализоровать таблицу"""
-        self.cursor.execute("""CREATE TABLE IF NOT EXIST `leaderboard` (
+        """Создание таблицы если её нет"""
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS `leaderboard` (
                                 `datetime` DATETIME,
                                 `score` INT,
                                 `session_time_sec` INT,
