@@ -42,8 +42,7 @@ class Game:
             self.meteorites.add(tmp_meteorite)
             self.all_sprites.add(tmp_meteorite)
 
-        self.events = Events(self.player, self.meteorites, self.lasers,
-                             self.powerups, self.all_sprites, self.states)
+        self.events = Events(self)
         self.main_loop()  # Запускаю main loop
 
     def draw(self):

@@ -11,13 +11,13 @@ from sounds import Sounds
 
 
 class Events:
-    def __init__(self, player, meteorites, lasers, powerups, all_sprites, states):
-        self.player = player
-        self.meteorites = meteorites
-        self.all_sprites = all_sprites
-        self.lasers = lasers
-        self.powerups = powerups
-        self.states = states
+    def __init__(self, context):  # context это класс Game из main.py
+        self.player = context.player
+        self.meteorites = context.meteorites
+        self.all_sprites = context.all_sprites
+        self.lasers = context.lasers
+        self.powerups = context.powerups
+        self.states = context.states
         self.db = Database()
         self.stats = {
             "start_time": datetime.now(),
