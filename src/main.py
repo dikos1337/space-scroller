@@ -83,13 +83,6 @@ class Game:
         self.events.ckeck_events()  # Обработка событий
 
     def main_loop(self):
-        # Фоновая музыка
-        # if self.background_sound_is_playing:
-        #     pass
-        # else:
-        #     self.background_sound_is_playing = True
-        #     Sounds.background_sound.play(loops=-1)
-
         while True:
             if self.states.current_state == "RESTART":
                 self.__init__()

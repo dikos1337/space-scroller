@@ -22,7 +22,7 @@ class Events:
         self.stats = {
             "start_time": datetime.now(),
             "score": 0,
-            "sessoin_time": 0,
+            "session_time": 0,
             "meteorite_hits": 0,
         }
 
@@ -81,14 +81,14 @@ class Events:
             print('Корабль разрушен')
             print('Набранные очки:', self.stats['score'])
             # Вычисляю время сессии
-            self.stats['sesion_time'] = (datetime.now() - self.stats['start_time']).seconds
+            self.stats['session_time'] = (datetime.now() - self.stats['start_time']).seconds
 
             # Костыль, чтоб успелось обрабаботься всё и в базу по 2 раза не писались очки
             pygame.time.wait(100)
 
             # Записываю очки в базу
             self.db.insert_scores(self.stats['start_time'], int(self.stats['score']),
-                                  self.stats['sesion_time'], self.stats['meteorite_hits'])
+                                  self.stats['session_time'], self.stats['meteorite_hits'])
 
             # Перезапускаю игру
             self.states.restart()
